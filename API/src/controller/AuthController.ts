@@ -6,7 +6,6 @@ import User from '../entity/User';
 
 import * as jwt from 'jsonwebtoken';
 import config from '../config/config';
-import user from '../routes/user';
 
 class AuthController {
   private userRepository: Repository<User>
@@ -40,7 +39,7 @@ class AuthController {
     //se firma y se devuelve el token
     const token = jwt.sign({ userId: user.id, username: user.username }, config.jwtSecret, { expiresIn: '1h' })
 
-    resp.json({ message: 'ok', token })
+    resp.json({ message: 'ok', token, userId:user.id, username:user.username, role:user.role })
   }
 
   public changePassword = async (req: Request, res: Response) => {
